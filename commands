@@ -1,0 +1,74 @@
+sublime text color scheme - monkai
+
+xdg-open [filename]
+
+gio trash --empty //empties trash 
+
+gnome-control-center //opens settings
+
+alt+space+n //to minimize
+
+juet server user name: 211b188@jiet.co.in
+juet server password: wifi password
+
+wifi:
+nmcli device disconnet "wlp0.." //disconnects from current wifi
+nmcli device status //show current interface/device name
+nmcli radio wifi off //turn wifi off
+nmcli radio wifi on //turn wifi on
+nmcli connection show //check status of current wifi connection
+nmcli connection delete id "OnePlus 11R 5G" //delete saved wifi connection
+					    //wifi connection is automatically saved
+nmcli device wifi list //list all available wifi
+nmcli device wifi connect "SSID" password password //connect to wifi with ssid "SSID"
+
+//download directly from url
+//downloads in current folder
+wget [url]
+
+wget -P [address] [url] //save the thing in the address given
+
+wget -O custom_name.png -P [address] [url] // specify the name the wanna give the stored file
+
+	
+
+gnome-control-center //opens settings
+
+
+
+
+//bash script to close all windows and shut down
+github stuff:
+gh auth status //check if im logged in or not
+git init
+git add .
+git commit -m "cook"
+
+//creates repo on your account of the folder Im are at currently
+gh repo create 'RepoName' --public --source=. 
+
+//delete repo
+gh repo delete mrinmooy/'RepoName' --yes
+
+git branch -a //lists all existing brances local and remote
+
+id=prompt-textarea
+
+
+
+sudo systemctl enable gdm3
+sudo systemctl set-default graphical.target
+
+
+//access smb through ubuntu
+smbclient -L //IP_ADDRESS -U USERNAME
+smbclient \\\\IP_ADDRESS\\SHARE_NAME -U USERNAME
+
+
+cisco models that my bh5 3rd floor router could be -
+- WRP400
+- SRP520
+- SRP520-U
+
+sublime text font - purisa regular size 20
+
