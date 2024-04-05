@@ -136,54 +136,12 @@ void Union(int a, int b){a=find(a); b=find(b);if(a!=b){if(siz[a]<siz[b]) swap(a,
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
-int f(int n)
-{
-    vi reff = sieve2(2000);
-
-    while(reff[n]!=1)
-    {
-        n++;
-    }
-    return n;
-}
-
 
 
 
 void mrinmoy(){
 
-    int n; cin>>n;
-
-    vpii res;
-
-    loop(i,2,n)
-    {
-        res.pb({i,i-1});
-    }
-    res.pb({1,n});
-
-    int x = f(n);
-
-    int i = 1;
-
-    while(x>n)
-    {
-        int ax1 = i + (n/2);
-
-        res.pb({i,ax1});
-
-        i++;
-
-        x--;
-    }
-
-    cout<<res.size(); nline;
-
-    for(auto it: res)
-    {
-        cout<<it.ff<<" "<<it.ss; nline;
-    }
-
+   
 
 }
 
