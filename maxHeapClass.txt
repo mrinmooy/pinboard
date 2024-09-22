@@ -4,7 +4,7 @@ void swap(int &a, int &b) {
 	a = a - b;
 }
 
-class mrinHeap {
+class mraxHeap {
 private:
 	vector<int> heapp = {0};
 	int sz = 0;
@@ -14,7 +14,7 @@ public:
 		sz += 1;
 		int i = sz;
 		while((i/2)>0) {
-			if(heapp[i]<heapp[i/2]) {
+			if(heapp[i]>heapp[i/2]) {
 				swap(heapp[i],heapp[i/2]);
 			}
 			i /= 2;
@@ -28,17 +28,17 @@ public:
 		int i = sz;
 		int temp1 = heapp[i], temp2;
 		while((i/2)>0) {
-			temp2 = heapp[i/2]; 
+			temp2 = heapp[i/2];
 			heapp[i/2] = temp1;
 			temp1 = temp2;
 			i /= 2;
 		}
 		heapp.pop_back();
 		sz -= 1;
-		if(sz>=2 and heapp[1]>heapp[2]) {
+		if(sz>=2 and heapp[1]<heapp[2]) {
 			swap(heapp[1],heapp[2]);
 		}
-		if(sz>=3 and heapp[1]>heapp[3]) {
+		if(sz>=3 and heapp[1]<heapp[3]) {
 			swap(heapp[1],heapp[3]);
 		}
 	}
@@ -47,15 +47,15 @@ public:
 	}
 };
 
-vector<int> heapsortASC(vector<int> &v, int n) {
+vector<int> heapsortDESC(vector<int> &v, int n) {
 	vector<int> res = {0};
-	mrinHeap mnH;
+	mraxHeap mxH;
 	for(int i=1;i<=n;i++) {
-		mnH.insert(v[i]);
+		mxH.insert(v[i]);
 	}
-	while(mnH.size()>0) {
-		res.push_back(mnH.top());
-		mnH.top_pop();
+	while(mxH.size()>0) {
+		res.push_back(mxH.top());
+		mxH.top_pop();
 	}
 	return res;
 }
