@@ -1,0 +1,39 @@
+class mrinHeap {
+private:
+	vector<int> heapp = {0};
+	int sz = 0;
+public:
+	void insert(int val) {
+		heapp.push_back(val);
+		sz += 1;
+		int i = sz;
+		while((i/2)>0) {
+			if(heapp[i]<heapp[i/2]) {
+				swap(heapp[i],heapp[i/2]);
+			}
+			i /= 2;
+		}
+	}
+	int top() {
+		return heapp[sz==0?0:1];
+	}
+	void top_pop() {
+		if(sz==0) return;
+		heapp[1] = heapp[sz];
+		heapp.pop_back();
+		sz -= 1;
+		int i = 1;
+		while((i*2)<=sz) {
+			if(heapp[i]>heapp[i*2]) {
+				swap(heapp[i],heapp[i*2]);
+				if(heapp[i]>heapp[i*2 + 1]) {
+					swap(heapp[i],heapp[i*2 + 1]);
+				}
+			}
+			i *= 2;
+		}
+	}
+	int size() {
+		return sz;
+	}
+};
