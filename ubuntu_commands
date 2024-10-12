@@ -1,3 +1,23 @@
+/usr/local/bin //this is where to save executables to run it directly from anywhere
+chmod +x "filename.sh" //to make a bash file executable
+
+nano editor shortcuts:
+ctrl + o //save
+ctrl + x //exit
+ctrl + e //go to end of current line
+ctrl + a //go to beginning of current line
+ctrl + p //go one line up
+ctrl + n //go one line down
+ctrl + / //go to a specific line number
+alt + a //start selecting text
+ctrl + g //get help
+ctrl + v //page down
+ctrl + y //page up
+alt + u //undo 
+ctrl + k //cut the selected text/current line
+ctrl + w //search for a word
+ctrl + c //show cursor location
+
 sublime text color scheme - monkai
 
 xdg-open [filename]
@@ -46,6 +66,8 @@ git commit -m "cook"
 
 //creates repo on your account of the folder Im are at currently
 gh repo create 'RepoName' --public --source=. 
+git add origin "branch name" // to connect local to main repo
+git push //pushes everything 
 
 //delete repo
 gh repo delete mrinmooy/'RepoName' --yes
