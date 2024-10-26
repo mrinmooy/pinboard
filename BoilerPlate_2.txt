@@ -1,0 +1,399 @@
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+const int mod = 1000000007;
+const int INF = 1e18;
+// I am so f***ing good
+
+
+template <class T>
+struct Node {
+   T val;
+   Node* next;
+   Node(T v, Node* n = nullptr) : val(v), next(n) {}
+};
+
+
+class PairII {
+public:
+   int first, second;
+   PairII () : first(0), second(0) {}
+   PairII (int f, int s) : first(f), second(s) {}
+   bool operator < (PairII p) const { return first!=p.first ? first<p.first : second<p.second; }
+   bool operator > (PairII p) const { return first!=p.first ? first>p.first : second>p.second; }
+   bool operator == (PairII p) const { return (first==p.first and second==p.second); }
+};
+
+class MinSegTree {
+private:
+   vector<int> seg;
+   int n;
+   int calcSize(int n) {
+      int cnt = 0, ok = -1;
+      while(n>0) {
+         if(n&1) ok = min(1LL,ok+1);
+         cnt += 1;
+         n /= 2;
+      }
+      return ((1LL<<(cnt + ok + 1)) - 1);
+   }
+   void build(vector<int> &arr, int n) {
+      int sz = calcSize(n);
+      seg.resize(sz+1);
+      fill(1,arr,1,n);
+   }
+   void fill(int i, vector<int> &arr, int l, int r) {
+      if(l==r) {
+         seg[i] = arr[l];
+         return;
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) -1;
+      int l2 = r1 + 1;
+      fill(i*2,arr,l1,r1);
+      fill(i*2+1,arr,l2,r2);
+      seg[i] = min(seg[i*2],seg[i*2+1]);
+      return;
+   }
+public:
+   MinSegTree(vector<int> &arr, int n) : n(n) {
+      build(arr,n);
+   }
+   int giveMinInRange( int rngL = 1, int rngR = 1, int i = 1, int l = 1, int r = -1) {
+      if(r==-1) {
+         r = n;
+      }
+      if(rngL>r or rngR<l) {
+         return 1e18;
+      }
+      if(rngL<=l and rngR>=r) {
+         return seg[i];
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) - 1;
+      int l2 = r1 + 1;
+      int ax1  = giveMinInRange(rngL, rngR, i*2,  l1,r1);
+      int ax2 = giveMinInRange(rngL, rngR, i*2+1, l2,r2);
+      return min(ax1,ax2);
+   }
+   void update(int ind, int val, int i = 1, int l = 1, int r = -1 ) {
+      if(r==-1) {
+         r = n;
+      }
+      if(ind<l or ind>r) {
+         return;
+      }
+      if(l==r and l==ind) {
+         seg[i] = val;
+         return;
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) - 1;
+      int l2 = r1 + 1;
+      update(ind,val,i*2, l1,r1);
+      update(ind,val,i*2+1,l2,r2);
+      seg[i] = min(seg[2*i], seg[2*i+1]);
+   }
+};
+
+class MaxSegTree {
+private:
+   vector<int> seg;
+   int n;
+   int calcSize(int n) {
+      int cnt = 0, ok = -1;
+      while(n>0) {
+         if(n&1) ok = min(1LL,ok+1);
+         cnt += 1;
+         n /= 2;
+      }
+      return ((1LL<<(cnt + ok + 1)) - 1);
+   }
+   void build(vector<int> &arr, int n) {
+      int sz = calcSize(n);
+      seg.resize(sz+1);
+      fill(1,arr,1,n);
+   }
+   void fill(int i, vector<int> &arr, int l, int r) {
+      if(l==r) {
+         seg[i] = arr[l];
+         return;
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) -1;
+      int l2 = r1 + 1;
+      fill(i*2,arr,l1,r1);
+      fill(i*2+1,arr,l2,r2);
+      seg[i] = max(seg[i*2],seg[i*2+1]);
+      return;
+   }
+public:
+   MaxSegTree(vector<int> &arr, int n) : n(n) {
+      build(arr,n);
+   }
+   int giveMaxInRange( int rngL = 1, int rngR = 1, int i = 1, int l = 1, int r = -1) {
+      if(r==-1) {
+         r = n;
+      }
+      if(rngL>r or rngR<l) {
+         return (0-(1e18));
+      }
+      if(rngL<=l and rngR>=r) {
+         return seg[i];
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) - 1;
+      int l2 = r1 + 1;
+      int ax1  = giveMaxInRange(rngL, rngR, i*2,  l1,r1);
+      int ax2 = giveMaxInRange(rngL, rngR, i*2+1, l2,r2);
+      return max(ax1,ax2);
+   }
+   void update(int ind, int val, int i = 1, int l = 1, int r = -1 ) {
+      if(r==-1) {
+         r = n;
+      }
+      if(ind<l or ind>r) {
+         return;
+      }
+      if(l==r and l==ind) {
+         seg[i] = val;
+         return;
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) - 1;
+      int l2 = r1 + 1;
+      update(ind,val,i*2, l1,r1);
+      update(ind,val,i*2+1,l2,r2);
+      seg[i] = max(seg[2*i], seg[2*i+1]);
+   }
+};
+
+
+
+template <class T>
+class mrinHeap {
+private:
+   vector<T> heapp;
+   int sz = 0;
+public:
+   mrinHeap() { heapp.resize(1); }
+   void insert(T val) {
+      heapp.push_back(val);
+      sz += 1;
+      int i = sz;
+      while((i/2)>0) {
+         if(heapp[i]<heapp[i/2]) {
+            swap(heapp[i],heapp[i/2]);
+         } else {
+            break;
+         }
+         i /= 2;
+      }
+   }
+   T top() {
+      return heapp[sz==0?0:1];
+   }
+   void top_pop() {
+      if(sz==0) return;
+      heapp[1] = heapp[sz];
+      heapp.pop_back();
+      sz -= 1;
+      int i = 1;
+      while((i*2)<=sz) {
+         if(heapp[2*i]<heapp[i]) {
+            swap(heapp[2*i],heapp[i]);
+            if(2*i+1<=sz and heapp[2*i+1]<heapp[i]) {
+               swap(heapp[2*i],heapp[i]);
+               swap(heapp[2*i+1],heapp[i]);
+               i = i*2 + 1;
+            } else {
+               i = i*2;
+            }
+         } else if(2*i + 1<=sz and heapp[2*i + 1]<heapp[i]) {
+            swap(heapp[2*i+1],heapp[i]);
+            i = i*2 + 1;
+         } else {
+            break;
+         }
+      }
+   }
+   int size() {
+      return sz;
+   }
+};
+
+
+template <class T>
+vector<T> heapsortASC(vector<T> &v, int n) {
+   vector<T> res; res.resize(1);
+   mrinHeap<T> mnH;
+   for(int i=1;i<=n;i++) {
+      mnH.insert(v[i]);
+   }
+   while(mnH.size()>0) {
+      res.push_back(mnH.top());
+      mnH.top_pop();
+   }
+   return res;
+}
+
+template <class T>
+class Queue {
+   Node<T> *head, *tail;
+   int size = 0;
+public:
+   Queue() : head(nullptr), tail(nullptr) {}
+   void push(T val) {
+      Node<T> *nn = new Node<T>(val);
+      if(head==nullptr and tail==nullptr) {
+         head = nn;
+         tail = nn;
+      } else {
+         tail->next = nn;
+         tail = nn;
+      }
+      size += 1;
+   }
+   T peek() {
+      return (head->val);
+   }
+   void pop() {
+      if(size==0) return;
+      Node<T> *temp = head;
+      if(head!=nullptr) {
+         head = head->next;
+         if(size==1) tail = nullptr;
+         delete temp;
+         size -= 1;
+      }
+   }
+   int getSize() {
+      return size;
+   }
+   void display() {
+      Node<T> *curr = head;
+      while(curr!=nullptr) {
+         cout<<curr->val<<" ";
+         curr = curr->next;
+      }
+      cout<<"\n";
+   }
+};
+
+int binpow(int a,int b,int m){
+    int res=1; 
+    while(b>0){ 
+      if(b&1) 
+         res=(res*a)%m; 
+      a=(a*a)%m; 
+      b>>=1; 
+    }
+    return res;
+}     
+
+int mmi(int n,int m){
+   return binpow(n,m-2,m);
+} 
+
+int divide(int x,int y,int m){
+   return ((x*mmi(y,m))%m);
+}
+
+int gcd(int a, int b) {
+   if(a>b) swap(a,b);
+   if(a==0) return b;
+   while(b%a!=0) {
+      int temp = a;
+      a = b%a;
+      b = temp;
+   }
+   return a;
+}
+
+
+vector<int> dijkstra(int n, vector<vector<pair<int, int>>>& graph, int start = 1) {
+    // Create a distance vector and initialize all distances to INF
+    vector<int> dist(n + 1, INF);  
+    dist[start] = 0;  // Distance to the source is 0
+    
+    // Min-heap priority queue to get the minimum distance vertex
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    pq.push({0, start});
+    
+    while (!pq.empty()) {
+      pair<int,int> it1 = pq.top();
+      int d = it1.first;
+      int u = it1.second;
+        // auto [d, u] = pq.top();  // Get the vertex with the smallest distance
+        pq.pop();
+        
+        // If the distance is greater than the current known distance, skip
+        if (d > dist[u]) continue;
+        
+        // Relaxation process
+        for (auto it2 : graph[u]) {
+            int v = it2.first;
+            int weight = it2.second;
+            if (dist[u] + weight < dist[v]) {
+                dist[v] = dist[u] + weight;  // Update the distance to vertex v
+                pq.push({dist[v], v});  // Push the updated distance into the queue
+            }
+        }
+    }
+    
+    return dist;
+}
+
+
+void mrinmoy() {
+
+   int n; cin>>n;
+   vector<int> v1(n+1), v2(n+1);
+   for(int i=1;i<=n;i++) {
+      cin>>v1[i];
+   }
+   for(int i=1;i<=n;i++) {
+      cin>>v2[i];
+   }
+   vector<int> pref(n+1);
+   for(int i=1;i<=n;i++) {
+      pref[i] = pref[i-1] + v1[i];
+   }
+   vector<vector<pair<int,int>>> g(n+1);
+   for(int i=n;i>=2;i--) {
+      g[i].push_back({i-1,0});
+   }
+   for(int i=1;i<=n;i++) {
+      if(v2[i]<=i) continue;
+      g[i].push_back({v2[i],v1[i]});
+   }
+
+   vector<int> dist = dijkstra(n,g,1);
+
+   int res = -1e18;
+   for(int i=1;i<=n;i++) {
+      if(dist[i]==INF) continue;
+      res = max(res, pref[i]-dist[i]);
+   }
+   cout<<res<<endl;
+
+
+
+   
+
+
+  
+   
+}
+
+signed main() { 
+
+   ios_base::sync_with_stdio(0); 
+    cin.tie(0);                   
+    cout.tie(0);
+   
+    int t = 1;
+    cin>>t;
+    while(t--) mrinmoy();
+    return 0;
+}
