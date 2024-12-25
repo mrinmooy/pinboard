@@ -1,0 +1,66 @@
+template <class T>
+class mrinHeap {
+private:
+   vector<T> heapp;
+   int sz = 0;
+public:
+   mrinHeap() { heapp.resize(1); }
+   void insert(T val) {
+      heapp.push_back(val);
+      sz += 1;
+      int i = sz;
+      while((i/2)>0) {
+         if(heapp[i]<heapp[i/2]) {
+            swap(heapp[i],heapp[i/2]);
+         } else {
+            break;
+         }
+         i /= 2;
+      }
+   }
+   T top() {
+      return heapp[sz==0?0:1];
+   }
+   void top_pop() {
+      if(sz==0) return;
+      heapp[1] = heapp[sz];
+      heapp.pop_back();
+      sz -= 1;
+      int i = 1;
+      while((i*2)<=sz) {
+         if(heapp[2*i]<heapp[i]) {
+            swap(heapp[2*i],heapp[i]);
+            if(2*i+1<=sz and heapp[2*i+1]<heapp[i]) {
+               swap(heapp[2*i],heapp[i]);
+               swap(heapp[2*i+1],heapp[i]);
+               i = i*2 + 1;
+            } else {
+               i = i*2;
+            }
+         } else if(2*i + 1<=sz and heapp[2*i + 1]<heapp[i]) {
+            swap(heapp[2*i+1],heapp[i]);
+            i = i*2 + 1;
+         } else {
+            break;
+         }
+      }
+   }
+   int size() {
+      return sz;
+   }
+};
+ 
+ 
+template <class T>
+vector<T> heapsortASC(vector<T> &v, int n) {
+   vector<T> res; res.resize(1);
+   mrinHeap<T> mnH;
+   for(int i=1;i<=n;i++) {
+      mnH.insert(v[i]);
+   }
+   while(mnH.size()>0) {
+      res.push_back(mnH.top());
+      mnH.top_pop();
+   }
+   return res;
+}

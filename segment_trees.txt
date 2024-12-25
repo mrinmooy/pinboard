@@ -1,0 +1,72 @@
+class MinSegTree {
+private:
+   vector<int> seg;
+   int n;
+   int calcSize(int n) {
+      int cnt = 0, ok = -1;
+      while(n>0) {
+         if(n&1) ok = min(1LL,ok+1);
+         cnt += 1;
+         n /= 2;
+      }
+      return ((1LL<<(cnt + ok + 1)) - 1);
+   }
+   void build(vector<int> &arr, int n) {
+      int sz = calcSize(n);
+      seg.resize(sz+1);
+      fill(1,arr,1,n);
+   }
+   void fill(int i, vector<int> &arr, int l, int r) {
+      if(l==r) {
+         seg[i] = arr[l];
+         return;
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) -1;
+      int l2 = r1 + 1;
+      fill(i*2,arr,l1,r1);
+      fill(i*2+1,arr,l2,r2);
+      seg[i] = min(seg[i*2],seg[i*2+1]);
+      return;
+   }
+public:
+   MinSegTree(vector<int> &arr, int n) : n(n) {
+      build(arr,n);
+   }
+   int giveMinInRange( int rngL = 1, int rngR = 1, int i = 1, int l = 1, int r = -1) {
+      if(r==-1) {
+         r = n;
+      }
+      if(rngL>r or rngR<l) {
+         return 1e18;
+      }
+      if(rngL<=l and rngR>=r) {
+         return seg[i];
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) - 1;
+      int l2 = r1 + 1;
+      int ax1  = giveMinInRange(rngL, rngR, i*2,  l1,r1);
+      int ax2 = giveMinInRange(rngL, rngR, i*2+1, l2,r2);
+      return min(ax1,ax2);
+   }
+   void update(int ind, int val, int i = 1, int l = 1, int r = -1 ) {
+      if(r==-1) {
+         r = n;
+      }
+      if(ind<l or ind>r) {
+         return;
+      }
+      if(l==r and l==ind) {
+         seg[i] = val;
+         return;
+      }
+      int l1 = l, r2 = r;
+      int r1 = l + ((r-l+1)/2) - 1;
+      int l2 = r1 + 1;
+      update(ind,val,i*2, l1,r1);
+      update(ind,val,i*2+1,l2,r2);
+      seg[i] = min(seg[2*i], seg[2*i+1]);
+   }
+};
+ 
