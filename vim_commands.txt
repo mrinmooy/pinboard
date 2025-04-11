@@ -1,0 +1,39 @@
+BASIC STUFF:
+
+insert mode, press i
+for command mode, press esc
+in command mode,
+	:w! to force save
+	:q! to force exit
+	:e! to go back to previous save
+for moving up and down, in command mode, press h,j,k,l
+to move to any linem in command mode, press 10G to move to 10th line
+use w to move to next word, in middle of the word use e to move to the end, use b to move to previous word
+use W and B to move by complete word, including punctuation marks and symbols
+in insert mode, use backspace to to delete text and enter for new line
+like insert mode with i, we have a for append, c for change(which basically highlights text), combine c with w or b or 0 or $)
+like cw, c0, c$, etc, (A is $a in command mode)
+r to replace just one character, stays in command mode
+s to replace more than one character like 13s to replace 13 next characters
+some commands have their uppercase counterpart, not that complex, you can figure it out by experimenting
+d deletes, dw to delete next one word, dd to delete entire line 
+y for yank
+p for put ( can be used after delete or yank )
+u undoes the latest change (in command mode)
+U restores the whole line
+x deleted just a single character 
+d deletes, p puts, y yanks(copy),
+( capital) J joins lines (these can be prefixed with numbers and suffixed with w or b)
+CTRL + D to scroll half a screen down
+CTRL + U to scroll half a screen up
+
+Advanced stuff:
+use ~ to change toggle upper case and lower case
+
+DIFFERNT FILES
+
+vi [file1] [file2] [file3] ...  to open multiple files
+:n or :next to move to the next file in the argument list
+:N to move to the previous file
+:edit [path/to/newfile] to open another file
+
