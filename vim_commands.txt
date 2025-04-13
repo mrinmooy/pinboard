@@ -11,8 +11,8 @@ to move to any linem in command mode, press 10G to move to 10th line
 use w to move to next word, in middle of the word use e to move to the end, use b to move to previous word
 use W and B to move by complete word, including punctuation marks and symbols
 in insert mode, use backspace to to delete text and enter for new line
-like insert mode with i, we have a for append, c for change(which basically highlights text), combine c with w or b or 0 or $)
-like cw, c0, c$, etc, (A is $a in command mode)
+	like insert mode with i, we have a for append, c for change(which basically highlights text), combine c with w or b or 0 or $)
+	like cw, c0, c$, etc, (A is $a in command mode)
 r to replace just one character, stays in command mode
 s to replace more than one character like 13s to replace 13 next characters
 some commands have their uppercase counterpart, not that complex, you can figure it out by experimenting
@@ -36,4 +36,9 @@ vi [file1] [file2] [file3] ...  to open multiple files
 :n or :next to move to the next file in the argument list
 :N to move to the previous file
 :edit [path/to/newfile] to open another file
+
+zz to scroll cursor to middle of screen
+CTRL+E to scroll by one line down
+u in escape mode to undo
+CTRL+R in escape mode to redo
 
